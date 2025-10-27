@@ -4,16 +4,29 @@ apitest-3.pyの10行目｛｝の中の「"role": "user", "content": "ここ！�
 最後のコマンドを実行する前に、エクスプローラーの「"\\wsl.localhost\Ubuntu\home\**username**\apitest\apitest-3.py"」あたり（mkdirコマンドで作成したディレクトリ内）にapitest.pyを配置してください。
 
 sudo apt update
+
 sudo apt upgrade
+
 sudo apt install software-properties-common
+
 sudo add-apt-repository ppa:deadsnakes/ppa
+
 sudo apt update
+
 sudo apt install python3.10
+
 sudo apt install python3.10-venv
+
 mkdir webtest
+
 cd webtest
+
 python3.10 -m venv venv
+
 source venv/bin/activate
+
 pip install yomitoku flask openai
+
 pip install -U openai
+
 python apitest-3.py
