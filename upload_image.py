@@ -166,11 +166,11 @@ def generate_quiz():
         return  redirect(url_for('play_quiz'))
 
 
-
+quiz_number = 0
 @app.route('/play_quiz', methods=['GET','POST'])
 def play_quiz():
     if request.method == 'GET':
-        quiz_number = 1
+        global quiz_number
         json_loaded = json.load(open(os.path.join(session['tmp_dir'], 'gpt.json'), 'r', encoding='utf-8'))
         print("render play_quiz.html")
         id = json_loaded["questions"][quiz_number]["id"]
@@ -182,8 +182,12 @@ def play_quiz():
         return render_template('play_quiz.html', id=id, question_text=question_text, options=options, correct_answer=correct_answer, explanation=explanation, quiz_number=quiz_number)
     elif request.method == 'POST':
         print("received POST at play_quiz.html")
-        quiz_number += 1
-        return redirect(url_for('play_quiz'))
+        if quiz_number >= 2:
+            quiz_number = 0
+            return redirect(url_for('upload'))
+        else:
+            quiz_number += 1
+            return redirect(url_for('play_quiz'))
     
 
 if __name__ == '__main__':

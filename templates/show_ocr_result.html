@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>First Flask proj</title></head>
+<body>
+<h1>OCRの結果</h1>
+<img src="{{ ocr_image }}"/>
+<form action ="{{ url_for('show_ocr_result') }}" method="POST">
+    <button type="submit">クイズをつくる</button>
+</form>
+</body>
+</html>

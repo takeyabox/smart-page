@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アップロード完了</title>
+</head>
+<body>
+    <h1>ファイルアップロード完了</h1>
+    <h2>{{filename}}</h2>
+    <form action="{{url_for('uploaded_file')}}" method="POST">
+        <button type="submit">これでよいか？</button>
+    </form>
+    <img src="{{filename}}"/>
+
+</body>
+</html>
