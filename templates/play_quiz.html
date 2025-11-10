@@ -8,20 +8,66 @@
             alert("正解は {{ correct_answer }} です。\n\n解説: {{ explanation }}");
         }
     </script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #dcedd2;}
+        /* aタグのリセットCSS（不要な場合、セレクタごと削除してください） */
+    a {
+    color: inherit;
+    text-decoration: none;
+    }
+
+    /* buttonタグのリセットCSS（不要な場合、セレクタごと削除してください） */
+    button {
+    padding: 0;
+    font-family: inherit;
+    appearance: none;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    }
+
+    /* ボタンのスタイル */
+    .buttonOutline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    height: 64px;
+    padding: 8px 24px;
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #6fa24a;
+    text-align: center;
+    overflow-wrap: anywhere;
+    background-color: transparent;
+    border: 2px solid #6fa24a;
+    }
+
+    @media (any-hover: hover) {
+    .buttonOutline {
+        transition: background-color 0.2s;
+    }
+
+    .buttonOutline:hover {
+        background-color: #d9ffc3;
+    }
+    }
+    </style>
 
 </head>
 <body>
-<p>this is play_quiz.html</p>
-    <p>{{ question_text }}</p>
+    <h1>問題{{ id }}</h1>
+    <h3>{{ question_text }}</h3>
     <p>
         <input type="radio" name="answer" value="{{ options[0] }}">{{ options[0] }}<br>
         <input type="radio" name="answer" value="{{ options[1] }}">{{ options[1] }}<br>
         <input type="radio" name="answer" value="{{ options[2] }}">{{ options[2] }}<br>
         <input type="radio" name="answer" value="{{ options[3] }}">{{ options[3] }}<br>
     </p>
-    <button type="button" onclick="Displaycorrectanswer()">解答を見る</button>
+    <button type="button" class="buttonOutline" onclick="Displaycorrectanswer()">解答を見る</button>
     <form method="POST">
-        <input type="submit" value="次の問題へ">
+        <input type="submit" value="次の問題へ" class="buttonOutline">
     </form>
 
 </body>

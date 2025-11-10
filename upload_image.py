@@ -19,18 +19,21 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SESSION_PERMANENT'] = False
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    if 'username' not in session:
-        print("Guest not found")
-        session['username'] = str(uuid.uuid4())
-        print("user id has been assigned")
-    else:
-        print(f"Guest found. {session['username']}")
+    if request.method == 'GET':
+        if 'username' not in session:
+            print("Guest not found")
+            session['username'] = str(uuid.uuid4())
+            print("user id has been assigned")
+        else:
+            print(f"Guest found. {session['username']}")
 
-    session['visits'] = session.get('visits', 0) + 1
-    print("redirecrt to upload")
-    return redirect(url_for('upload'))
+        session['visits'] = session.get('visits', 0) + 1
+        return render_template('index.html', visits=session['visits'])
+    elif request.method == 'POST':
+        print("redirect to upload")
+        return redirect(url_for('upload'))
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -65,6 +68,7 @@ def uploaded_file():
         return app.response_class(stream_with_context(ocr_progress()))
 
 def ocr_progress():
+    yield "<style>body { font-family: Arial, sans-serif; background-color: #dcedd2;}</style>"
     yield "OCRを開始<br>"
     print("run OCR")
     run_yomitoku(src_image=session['src_image'], output_dir=session['tmp_dir'])
@@ -156,8 +160,9 @@ def generate_quiz():
         quiz = quiz[delete_before:delete_after]
         with open(session['tmp_dir'] + "/gpt.json", "w", encoding="utf-8") as file:
             file.write(quiz)
+        
         print("received quiz from OpenAI")
-        return render_template('generate_quiz.html', quiz=quiz)
+        return render_template('generate_quiz.html')
     
     elif request.method == 'POST':
         print("received POST at generate_quiz.html")
